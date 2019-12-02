@@ -3,13 +3,28 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Adalab Web Starter Kit</title>
+    <title>Buscador de series</title>
     <link rel="stylesheet" href="./assets/css/normalize.css">
     <link rel="stylesheet" href="./assets/css/main.css" />
   </head>
   <body>
     <div class="wrapper">
-     
+      <div class="search">
+          <h1>Buscador de series</h1>
+          <form action="" method="post" class="form" id="js-form">
+            <input type="text" class="input" id="js-input" value="">
+            <button type="button" id="js-button" class="button">Buscar</button>
+          </form>
+          <section class="favorites" id="favorites">
+            <h2>Mis series favoritas</h2>
+            <ul id="js-fav-list" class="fav-list"></ul>
+          </section>
+      </div>
+      <main id="js-results" class="results">
+          <ul class="results-list" id="js-results-list"></ul>
+      </main>
+    </div>
+    <script src="./assets/js/main.js"></script>
     </div>
   </body>
 </html>
