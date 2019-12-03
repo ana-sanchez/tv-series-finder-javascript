@@ -10,9 +10,12 @@ const elementButton = document.querySelector('#js-button');
 const elementInput = document.querySelector('#js-input');
 const elemenListFav = document.querySelector('#js-fav-list');
 const elementListResult = document.querySelector('#js-results-list');
+const elementReset = document.querySelector('#js-reset')
 const urlBase = 'http://api.tvmaze.com/search/shows?q=';
+const elementListFav = document.querySelector('#js-fav-list');
+const elementItemReset = document.querySelector('#js-reset-item')
 let listResultContain = '';
-let listResultFavorites='';
+
 let favoritesObj = [];
 
 
@@ -32,10 +35,10 @@ const searchSeriesHandler = () => {
 function displaySeries (data)  {
 for (let item of data) {
     if (item.show.image === null ){
-        listResultContain += `<li class="serie-list""><span  class="serie--name">${item.show.name}</span><img class="serie--image" src="https://via.placeholder.com/210x295/ffffff/666666/?text=TV"></li>`;
+        listResultContain += `<li class="serie-list" data="${item.show.id}"><span  class="serie--name">${item.show.name}</span><img class="serie--image" src="https://via.placeholder.com/210x295/ffffff/666666/?text=TV"></li>`;
 
     } else {
-        listResultContain +=`<li class="serie-list"><span class="serie--name">${item.show.name}</span><img class="serie--image" src="${item.show.image.medium}"></li>`
+        listResultContain +=`<li class="serie-list" data="${item.show.id}"><span class="serie--name">${item.show.name}</span><img class="serie--image" src="${item.show.image.medium}"></li>`
     }
     
 }
@@ -52,9 +55,10 @@ function createFavorites () {
         for (let item of list) {
             item.addEventListener('click', showFav)
         }
+      
     }
 
-
+ 
 
 // 2.selecciono y guardo en el localstorage
 
@@ -68,21 +72,48 @@ function showFav () {
     const favorites = {
         "name": elementFavSpan.innerHTML,
         "image": elementFavImg.src,
-    } 
+        
+    }
     favoritesObj.push(favorites);
     localStorage.setItem('myFavorites',JSON.stringify(favoritesObj));
-    createFavorites()
- }
- loadFav()
+    paintFav(favoritesObj)
+   
+   
     
+    } else if (!elementFavLi.classList.contains('show-background')) {
+        
+        favoritesObj = JSON.parse(localStorage.getItem('myFavorites'));
+        const localIndex = findIndex(elementFavSpan.innerHTML, favoritesObj);
+        favoritesObj.splice(localIndex, 1);
+        localStorage.setItem('myFavorites',JSON.stringify(favoritesObj));
+        paintFav(favoritesObj)
+       
+        
+    }
+   
+
+    
+
 }
+
+// buscador indice array
+function findIndex(name, array){
+    for (let i=0; i < array.length; i++) {
+        if (array[i].name === name) {
+            return array.indexOf(array[i]);
+        }
+    }
+}
+
+
+
 // recojo datos del localstorage
 function loadFav() {
     const mylocalStorage = localStorage.getItem('myFavorites')
     if(mylocalStorage !== null) {
-        favoritesObj = JSON.parse(mylocalStorage);;
+        favoritesObj = JSON.parse(mylocalStorage);
         paintFav(favoritesObj)
-
+        
     }
     
 }
@@ -90,15 +121,44 @@ function loadFav() {
 //recorro datos guardados en el local storage y pinto en el DOM 
 
 function paintFav (arr) {
-    const elementListFav = document.querySelector('#js-fav-list');
+    let listResultFavorites= '';
     for (let obj of arr) {
-        listResultFavorites += `<span>${obj.name}</span><img src=${obj.image}>`
+        listResultFavorites += `<div class="fav" id="js-fav"><li class="fav-list"><img src=${obj.image} class="fav__image"><span class="fav__title">${obj.name}</span><button type="button" id="js-reset-item" class="fav__remove">X</button></li></div>`
     }
-
     elementListFav.innerHTML = listResultFavorites;
+    resetHandlerFav()
+    
+  
+
 }
 
+//boton reset, borra del localstorage + div + quita clase   
 
+const resetFav = () => {
+    const mylocalStorage = localStorage.getItem('myFavorites')
+    favoritesObj = JSON.parse(mylocalStorage);
+    const itemResult = document.querySelector('.serie-list')
+    if (elemenListFav.innerHTML !== '' && mylocalStorage !== null ){
+        elemenListFav.innerHTML = '';
+        localStorage.removeItem('myFavorites')
+        itemResult.classList.remove('show-background');
+    }
+}
+
+// selecc
+function resetHandlerFav() {
+    const list = document.querySelectorAll('.fav__remove');
+        for (let item of list) {
+            item.addEventListener('click', resetItem)
+        }
+      
+    }
+
+
+const resetItem = (event) => {
+  const elementFav = event.currentTarget.closest('li');
+  elementFav.classList.add('hidden')
+}
 
 
 
@@ -111,5 +171,7 @@ function submitHandler (event) {
 
 elementForm.addEventListener('submit', submitHandler)
 elementButton.addEventListener('click', searchSeriesHandler)
-// window.addEventListener('load', loadFav)
+window.addEventListener('load', loadFav);
+elementReset.addEventListener('click', resetFav);
+
 
