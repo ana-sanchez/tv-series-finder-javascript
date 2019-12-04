@@ -40,23 +40,31 @@ body {
 			margin-right: 10px;
 			width: 250px;
 			font-family: 'Roboto', sans-serif;
-			padding: 10px;
+			padding: 5px;
 			color: grey;
+			vertical-align: middle;
+			white-space: nowrap;
+			position: relative;
 		}
 		&--button {
 			background-color: #ffac8e;
 			border-radius: 10px;
 			border: 2px #ffac8e solid;
-			width: 80px;
+			width: 30px;
 			height: 30px;
+			border-radius:50% ;
 			color: white;
 			font-family: 'Roboto', sans-serif;
 			cursor: pointer;
+			font-size: 12px;
+		
 	
 		}
 		&--button:hover {
 			 color: white;
 			 background: transparent;
+			
+			 transition: background ease-in 500ms;
 		}
 	}
 
@@ -79,6 +87,7 @@ body {
 
 }
 
+
 .results {
 	background-color: #ffac8e;
 	display: flex;
@@ -86,6 +95,14 @@ body {
 	flex-wrap: wrap ;
 	justify-content: center;
 	align-items: center;
+	width: 100%;
+
+	&__list {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap ;
+		justify-content: center;
+	}
 	
 }
 
@@ -102,7 +119,7 @@ body {
 
 .show-background {
 	background-color: #3f4d71;
-	padding: 5%;
+	padding: 10px;
 	border: 1px solid #3f4d71;
 	border-radius: 5px;
 }
@@ -119,6 +136,9 @@ body {
 	font-family: 'Solway', serif;
 	font-weight: 500;
 	margin-bottom: 5px;
+	font-size: 12px;
+	max-width: 100px;
+	text-align: center;
 
 }
 
@@ -180,8 +200,18 @@ body {
 	font-family: 'Solway', serif;
 	font-size: 12px;
 	font-weight: 500;
-	border: 1px solid #ffac8e;
-	border-radius: 3px;
-	width: 50px;
+	border: 2px solid #ffac8e;
+	border-radius: 50%;
+    width: 30px;
+    height: 30px;
+	position: absolute;
+	margin: 20px;
+	cursor:pointer;
+
+	&:hover {
+		// background: transparent;
+		transform:scale(1.1);
+		transition:transform ease-in 500ms;
+	}
 	
 }

@@ -6,6 +6,7 @@
     <title>Buscador de series</title>
     <link rel="stylesheet" href="./assets/css/normalize.css">
     <link rel="stylesheet" href="./assets/css/main.css" />
+    <script src="https://kit.fontawesome.com/af75a57430.js" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css?family=Solway:400,500,800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,900&display=swap" rel="stylesheet">
 
@@ -13,15 +14,16 @@
   </head>
   <body>
     <div class="wrapper">
+        <button type="button" id="js-reset" class="reset"><i class="fas fa-redo-alt"></i></button>
       <div class="search">
           <h1 class="search__title">Buscador de series</h1>
           <form action="" method="post" class="search__form" id="js-form">
-            <input type="text" class="search__form--input" id="js-input" value="">
-            <button type="button" id="js-button" class="search__form--button">Buscar</button>
+            <input type="search" class="search__form--input" id="js-input" value="">
+            <button type="button" id="js-button" class="search__form--button"><i class="fa fa-search"></i></button>
           </form>
           <section class="search__favorites" id="favorites">
             <h2 class="search__favorites--title">Mis series favoritas</h2>
-            <button type="button" id="js-reset" class="reset">RESET</button>
+            
             <ul id="js-fav-list" class="search__favorites--list"></ul>
           </section>
       </div>
